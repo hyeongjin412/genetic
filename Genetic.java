@@ -13,7 +13,7 @@ public class Genetic {
             arr1[i] = r.nextInt(31)+1;
         }
         return arr1;
-    }
+    } // arr1 선출
 
     public static int[] init2() {
         Random r = new Random();
@@ -22,7 +22,7 @@ public class Genetic {
             arr2[i] = r.nextInt(31)+1;
         }
         return arr2;
-    }
+    } // arr2 선출
 
     public static int MSE(int a, int b ,int[] x, int[] y){
         int SEE;
@@ -35,7 +35,7 @@ public class Genetic {
         }
 
         return MSE;
-    }
+    } // MSE 
 
     public static int[] selection( int[] a, int[] b, int[] x, int[] y) {
         int[] f = new int[a.length];
@@ -52,7 +52,7 @@ public class Genetic {
         sum=0;
         for (int i = 0; i < a.length; i++) {
             sum += f[i];
-        }
+        } 
 
         double[] ratio = new double[a.length];
         for (int i = 0; i < ratio.length; i++) {
@@ -83,7 +83,7 @@ public class Genetic {
             }
         }
         return result;
-    }
+    } //선택연산
 
     public static String int2String(String x) {
         return String.format("%8s", x).replace(' ', '0');
@@ -100,7 +100,7 @@ public class Genetic {
         }
 
         return arr;
-    }
+    } //교차연산
 
     public static int invert(String x) {
         Random r = new Random();
@@ -112,7 +112,7 @@ public class Genetic {
             }
         }
         return a;
-    }
+    }  //돌연변이
 
     public static int[] mutation(String[] x) {
         int[] a = new int[x.length];
@@ -131,7 +131,7 @@ public class Genetic {
         int[] arr1 = init1();
         int[] arr2 = init2();
 
-        int[] MSE = new int[arr1.length];
+        int[] MSE = new int[arr1.length];ㅜ
         double min = 300.0;
         int a=0;
         int b=0;
@@ -147,7 +147,7 @@ public class Genetic {
                 arr2[j] = mx[j+arr1.length];
             }
             for(int j = 0; j <arr1.length; j++) {
-                MSE[j] = MSE(arr1[j],arr2[j],x,y);
+                MSE[j] = MSE(arr1[j],arr2[j],x,y); 
                 if(min>MSE[j]){
                     min = MSE[j];
                     a = arr1[j];
