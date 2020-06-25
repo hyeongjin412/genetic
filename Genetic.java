@@ -63,16 +63,16 @@ public class Genetic {
         Random r = new Random();
 
         for (int i = 0; i < a.length; i++) {
-            double p = r.nextInt();
-            if(p<ratio[0]){
+            double m = r.nextInt();
+            if(m<ratio[0]){
                 result[i] = a[0];
                 result[i+a.length] = b[0];
             }
-            else if(p<ratio[1]){
+            if(m<ratio[1]){
                 result[i] = a[1];
                 result[i+a.length] = b[1];
             }
-            else if(p<ratio[2]){
+            if(m<ratio[2]){
                 result[i] = a[2];
                 result[i+a.length] = b[2];
             }
