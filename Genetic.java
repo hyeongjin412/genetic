@@ -38,25 +38,26 @@ public class Genetic {
     }
 
     public static int[] selection( int[] a, int[] b, int[] x, int[] y) {
-        int[] comp = new int[a.length];
-        int comp_sum=0;
+        int[] f = new int[a.length];
+        int sum=0;
+
+
+        for (int i = 0; i < a.length; i++) {
+            f[i] = MSE(a[i],b[i],x,y);
+            sum += f[i];
+        }
+        for (int i = 0; i < a.length; i++) {
+            f[i] = sum-f[i];
+        }
+        sum=0;
+        for (int i = 0; i < a.length; i++) {
+            sum += f[i];
+        }
+
         double[] ratio = new double[a.length];
-
-        for (int i = 0; i < a.length; i++) {
-            comp[i] = MSE(a[i],b[i],x,y);
-            comp_sum += comp[i];
-        }
-        for (int i = 0; i < a.length; i++) {
-            comp[i] = comp_sum-comp[i];
-        }
-        comp_sum=0;
-        for (int i = 0; i < a.length; i++) {
-            comp_sum += comp[i];
-        }
-
         for (int i = 0; i < ratio.length; i++) {
-            if(i==0) ratio[i] = (double)(comp[i])/(double)comp_sum;
-            else ratio[i] = ratio[i-1]+((double)(comp[i])/(double)comp_sum);
+            if(i==0) ratio[i] = (double)(f[i])/(double)sum;
+            else ratio[i] = ratio[i-1]+((double)(f[i])/(double)sum);
         }
         int[] result = new int[a.length*2];
 
@@ -123,26 +124,27 @@ public class Genetic {
 
     public static void main(String[] args) {
 
-        int[] arr1 = init1();
-        int[] arr2 = init2();
-
-
         int[] x ={1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10};
         int[] y ={5,8,7,6,9,11,14,17,16,19,18,24,21,25,23,27,26,30,29,31};
 
+
+        int[] arr1 = init1();
+        int[] arr2 = init2();
+
         int[] MSE = new int[arr1.length];
-        double min = 10000.0;
+        double min = 300.0;
         int a=0;
         int b=0;
 
-        for(int i=0; i<1000; i++) {
-            int[] selec = selection(arr1,arr2,x,y);
-            String[] cross = crossover(selec);
-            int[] mut = mutation(cross);
+        for(int i=0; i<500; i++) {
+            int[] sx = selection(arr1,arr2,x,y);
+
+            String[] cross = crossover(sx);
+            int[] mx = mutation(cross);
 
             for (int j = 0; j <arr1.length ; j++) {
-                arr1[j] = mut[j];
-                arr2[j] = mut[j+arr1.length];
+                arr1[j] = mx[j];
+                arr2[j] = mx[j+arr1.length];
             }
             for(int j = 0; j <arr1.length; j++) {
                 MSE[j] = MSE(arr1[j],arr2[j],x,y);
@@ -151,9 +153,15 @@ public class Genetic {
                     a = arr1[j];
                     b = arr2[j];
 
+                    System.out.println("회귀식: y="+a+"x+"+b);
+                    System.out.println("MSE값 :" +min);
+
                 }
+
             }
         }
         System.out.println("회귀식: y="+a+"x+"+b);
+        System.out.println("MSE값 :" +min);
+
     }
 }
